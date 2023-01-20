@@ -1,6 +1,6 @@
 <script>
 	import { onMount, afterUpdate } from 'svelte';
-	import { browser } from '$app/environment';
+	import { browser, dev } from '$app/environment';
 	import { informacionParcela, section, layers } from '../store';
 	import { assets } from '$app/paths';
 
@@ -74,8 +74,12 @@
 	};
 
 	const loadModel = async (name) => {
-		const osmBuildings = (await import('osmbuildings/dist/OSMBuildings-Leaflet')).OSMBuildings;
-		new osmBuildings(map).load(`${assets}/layers/${name}.geojson`);
+		const osmBuildings = await import('osmbuildings/dist/OSMBuildings-Leaflet.debug');
+		if (dev) {
+			new osmBuildings.OSMBuildings(map).load(`${assets}/layers/${name}.geojson`);
+		} else {
+			new OSMBuildings(map).load(`${assets}/layers/${name}.geojson`);
+		}
 	};
 </script>
 
