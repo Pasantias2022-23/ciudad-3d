@@ -40,3 +40,8 @@ pnpm install
 ```bash
 pnpm build
 ```
+# Ejecutar la aplicación con Docker
+```bash
+docker build -t frontend .
+docker run -p 5173:5173 frontend
+``` 
